@@ -1,0 +1,14 @@
+SELECT
+  Brand,
+  SUM(Total_Units) AS Total_Units,
+  SUM(Total_Sales) AS Total_Sales,
+  AVG(Avg_Market_Share) AS Market_Share
+
+FROM
+`automotive-analytics-505114.automotive_analytics.vw_brand_performance`
+
+GROUP BY
+Brand
+
+ORDER BY
+Total_Units DESC
