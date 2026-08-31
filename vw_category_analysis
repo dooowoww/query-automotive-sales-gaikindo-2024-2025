@@ -1,0 +1,10 @@
+SELECT
+  Category_No,
+  SUM(Units) AS total_units,
+  SUM(Annual_Total) AS total_sales
+FROM
+`automotive-analytics-505114.automotive_analytics.fact_category_sales`
+GROUP BY
+Category_No
+ORDER BY
+total_sales DESC
