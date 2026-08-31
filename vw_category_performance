@@ -1,0 +1,27 @@
+SELECT
+  c.Category,
+  d.Year,
+  SUM(f.Units) AS Total_Units,
+  SUM(f.Annual_Total) AS Total_Sales
+
+FROM
+`automotive-analytics-505114.automotive_analytics.fact_category_sales` f
+
+JOIN
+`automotive-analytics-505114.automotive_analytics.dim_category` c
+
+ON
+f.Category_No = c.Category_No
+
+JOIN
+`automotive-analytics-505114.automotive_analytics.dim_date` d
+
+ON
+f.Date = d.Date
+
+GROUP BY
+c.Category,
+d.Year
+
+ORDER BY
+Total_Units DESC
