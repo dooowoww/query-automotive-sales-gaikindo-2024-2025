@@ -1,0 +1,35 @@
+WITH yearly_sales AS (
+  SELECT
+    Year,
+    SUM(Units) AS total_units,
+    SUM(Annual_Total) AS total_sales
+  FROM `automotive-analytics-505114.automotive_analytics.fact_brand_sales_final`
+  GROUP BY Year
+),
+
+sales_with_previous AS (
+  SELECT
+    Year,
+    total_units,
+    total_sales,
+    LAG(total_sales) OVER (ORDER BY Year) AS previous_sales
+  FROM yearly_sales
+)
+
+SELECT
+  Year,
+  DATE(Year, 1, 1) AS Year_Date,
+  total_units,
+  total_sales,
+  previous_sales,
+
+  ROUND(
+    SAFE_DIVIDE(
+      total_sales - previous_sales,
+      previous_sales
+    ) * 100,
+    2
+  ) AS yoy_growth_percentage
+
+FROM sales_with_previous
+ORDER BY Year
