@@ -1,0 +1,11 @@
+SELECT
+  Brand_No,
+  SUM(Units) AS total_units,
+  SUM(Annual_Total) AS total_sales,
+  AVG(Market_Share) AS market_share
+FROM
+`automotive-analytics-505114.automotive_analytics.fact_brand_sales_final`
+GROUP BY
+Brand_No
+ORDER BY
+total_sales DESC
