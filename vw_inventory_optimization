@@ -1,0 +1,48 @@
+SELECT
+  f.Brand_No,
+  d.Brand,
+  f.Year,
+
+  SUM(CASE
+      WHEN f.Sales_Type = 'Wholesale' THEN f.Units
+      ELSE 0
+  END) AS wholesale_units,
+
+  SUM(CASE
+      WHEN f.Sales_Type = 'Retail' THEN f.Units
+      ELSE 0
+  END) AS retail_units,
+
+  SUM(CASE
+      WHEN f.Sales_Type = 'Wholesale' THEN f.Units
+      ELSE 0
+  END)
+  -
+  SUM(CASE
+      WHEN f.Sales_Type = 'Retail' THEN f.Units
+      ELSE 0
+  END) AS inventory_gap,
+
+  SAFE_DIVIDE(
+    SUM(CASE
+        WHEN f.Sales_Type = 'Retail' THEN f.Units
+        ELSE 0
+    END),
+    SUM(CASE
+        WHEN f.Sales_Type = 'Wholesale' THEN f.Units
+        ELSE 0
+    END)
+  ) AS retail_ratio
+
+FROM
+  `automotive-analytics-505114.automotive_analytics.fact_brand_sales_final` AS f
+
+LEFT JOIN
+  `automotive-analytics-505114.automotive_analytics.dim_brand` AS d
+ON
+  f.Brand_No = d.Brand_No
+
+GROUP BY
+  f.Brand_No,
+  d.Brand,
+  f.Year
