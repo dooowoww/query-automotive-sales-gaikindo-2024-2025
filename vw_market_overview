@@ -1,0 +1,19 @@
+SELECT
+    f.Year,
+    DATE(f.Year, f.Month_Number, 1) AS Year_Date,
+    f.Month_Number,
+    f.Month,
+    f.Sales_Type,
+    f.Brand_No,
+    b.Brand,
+    f.Units,
+    f.Annual_Total,
+    f.Market_Share
+
+FROM
+    `automotive-analytics-505114.automotive_analytics.fact_brand_sales_final` f
+
+LEFT JOIN
+    `automotive-analytics-505114.automotive_analytics.dim_brand` b
+ON
+    f.Brand_No = b.Brand_No
