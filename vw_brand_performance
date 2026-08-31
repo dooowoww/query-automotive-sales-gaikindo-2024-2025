@@ -1,0 +1,28 @@
+SELECT
+  b.Brand,
+  d.Year,
+  SUM(f.Units) AS Total_Units,
+  SUM(f.Annual_Total) AS Total_Sales,
+  AVG(f.Market_Share) AS Avg_Market_Share
+
+FROM
+`automotive-analytics-505114.automotive_analytics.fact_brand_sales` f
+
+JOIN
+`automotive-analytics-505114.automotive_analytics.dim_brand` b
+
+ON
+f.Brand_No = b.Brand_No
+
+JOIN
+`automotive-analytics-505114.automotive_analytics.dim_date` d
+
+ON
+f.Date = d.Date
+
+GROUP BY
+b.Brand,
+d.Year
+
+ORDER BY
+Total_Units DESC
