@@ -1,0 +1,13 @@
+SELECT
+  SUM(CASE WHEN Year = 2024 THEN Units ELSE 0 END) AS Sales_2024,
+  SUM(CASE WHEN Year = 2025 THEN Units ELSE 0 END) AS Sales_2025,
+  SUM(CASE WHEN Year = 2025 THEN Units ELSE 0 END)
+    - SUM(CASE WHEN Year = 2024 THEN Units ELSE 0 END) AS Sales_Growth,
+
+  SAFE_DIVIDE(
+    SUM(CASE WHEN Year = 2025 THEN Units ELSE 0 END)
+    - SUM(CASE WHEN Year = 2024 THEN Units ELSE 0 END),
+    SUM(CASE WHEN Year = 2024 THEN Units ELSE 0 END)
+  ) * 100 AS Total_Market_Growth
+
+FROM `automotive-analytics-505114.automotive_analytics.fact_category_sales`
