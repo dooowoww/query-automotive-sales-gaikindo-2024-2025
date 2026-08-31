@@ -1,0 +1,18 @@
+SELECT
+  Year,
+  Month_Number,
+  Month,
+  SUM(Units) AS total_units,
+  AVG(Market_Share) AS avg_market_share
+
+FROM
+`automotive-analytics-505114.automotive_analytics.fact_brand_sales_final`
+
+GROUP BY
+  Year,
+  Month_Number,
+  Month
+
+ORDER BY
+  Year,
+  Month_Number
